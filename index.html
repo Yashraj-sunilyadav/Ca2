@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoTrack - Renewable Energy Resource Tracker</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Configure Tailwind with custom colors -->
     <script>
         tailwind.config = {
             theme: {
@@ -36,384 +36,467 @@
                             800: '#075985',
                             900: '#0c4a6e',
                         }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-    <link rel="stylesheet" href="css/custom.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-gray-50 font-sans">
-    <header class="bg-white shadow-sm sticky top-0 z-30">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center space-x-2">
-                    <svg class="h-8 w-8 text-primary-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 3V5M5.63607 5.63604L7.05029 7.05025M3 12H5M5.63607 18.364L7.05029 16.9497M12 19V21M16.9497 16.9497L18.364 18.364M19 12H21M16.9497 7.05025L18.364 5.63604M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span class="text-xl font-semibold text-gray-800">EcoTrack</span>
+<body class="font-[Inter] bg-gray-50 text-gray-800">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        <span class="ml-2 text-xl font-bold text-primary-700">EcoTrack</span>
+                    </a>
                 </div>
-                <nav class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="text-primary-600 font-medium">Home</a>
-                    <a href="projects.html" class="text-gray-600 hover:text-primary-600 transition-colors">Projects</a>
-                    <a href="dashboard.html" class="text-gray-600 hover:text-primary-600 transition-colors">Dashboard</a>
-                    <a href="profile.html" class="text-gray-600 hover:text-primary-600 transition-colors">Community</a>
-                    <a href="about.html" class="text-gray-600 hover:text-primary-600 transition-colors">About</a>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-primary-700 border-b-2 border-primary-500 px-1 pt-1 font-medium" aria-current="page">Home</a>
+                    <a href="projects.html" class="text-gray-700 hover:text-primary-600 px-1 pt-1 font-medium">Projects</a>
+                    <a href="dashboard.html" class="text-gray-700 hover:text-primary-600 px-1 pt-1 font-medium">Dashboard</a>
+                    <a href="profile.html" class="text-gray-700 hover:text-primary-600 px-1 pt-1 font-medium">Community</a>
+                    <a href="about.html" class="text-gray-700 hover:text-primary-600 px-1 pt-1 font-medium">About</a>
                 </nav>
                 <div class="flex items-center space-x-4">
-                    <button class="hidden md:block bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-                        Log In
-                    </button>
-                    <button class="md:hidden text-gray-600" id="mobileMenuButton">
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button class="hidden md:block bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300">Sign In</button>
+                    <button class="md:hidden text-gray-700" id="mobileMenuButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
                 </div>
             </div>
-            <div class="md:hidden hidden transition-all duration-300 ease-in-out" id="mobileMenu">
-                <div class="px-2 pt-2 pb-4 space-y-1">
-                    <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-primary-600 bg-primary-50">Home</a>
-                    <a href="projects.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary-600 hover:bg-primary-50">Projects</a>
-                    <a href="dashboard.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary-600 hover:bg-primary-50">Dashboard</a>
-                    <a href="profile.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary-600 hover:bg-primary-50">Community</a>
-                    <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary-600 hover:bg-primary-50">About</a>
-                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-primary-600 hover:bg-primary-700">Log In</a>
-                </div>
+        </div>
+        <!-- Mobile menu, show/hide based on menu state -->
+        <div class="hidden md:hidden" id="mobileMenu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-primary-600">Home</a>
+                <a href="projects.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Projects</a>
+                <a href="dashboard.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Dashboard</a>
+                <a href="profile.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Community</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">About</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 mt-4">Sign In</a>
             </div>
         </div>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="relative bg-gradient-to-r from-primary-600 to-secondary-600 text-white overflow-hidden">
-            <div class="absolute inset-0 z-0 opacity-30">
-                <svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                    <path fill="#ffffff" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-                </svg>
-            </div>
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
-                <div class="max-w-3xl">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Empowering Communities with Renewable Energy Tracking</h1>
-                    <p class="text-xl mb-8 text-white/80">Join the movement to track, manage, and optimize renewable energy resources in your community.</p>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="projects.html" class="bg-white text-primary-600 font-medium px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors">
-                            Explore Projects
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-primary-600 to-secondary-600 py-24">
+        <div class="absolute inset-0 bg-opacity-75">
+            <svg xmlns="http://www.w3.org/2000/svg" class="opacity-10" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,160L48,133.3C96,107,192,53,288,53.3C384,53,480,107,576,160C672,213,768,267,864,250.7C960,235,1056,149,1152,122.7C1248,96,1344,128,1392,144L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="md:flex md:items-center md:space-x-16">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                        Empowering Communities with Renewable Energy
+                    </h1>
+                    <p class="mt-4 text-xl text-white text-opacity-90">
+                        Track, manage, and visualize renewable energy resources in your community. Join the movement toward a sustainable future.
+                    </p>
+                    <div class="mt-8 flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+                        <a href="projects.html" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary-700 bg-white hover:bg-gray-100 shadow-md transition-colors duration-300">
+                            View Projects
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
                         </a>
-                        <a href="dashboard.html" class="bg-transparent border-2 border-white text-white font-medium px-6 py-3 rounded-lg hover:bg-white/10 transition-colors">
+                        <a href="dashboard.html" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-opacity-20 bg-white hover:bg-opacity-30 transition-colors duration-300">
                             View Dashboard
                         </a>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Key Stats Section -->
-        <section class="py-16 bg-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-900">Community Impact at a Glance</h2>
-                    <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">Track how renewable energy is making a difference in communities across the region.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="bg-gray-50 rounded-xl p-6 text-center transform transition duration-300 hover:scale-105 hover:shadow-md">
-                        <div class="text-secondary-500 mb-4">
-                            <svg class="h-12 w-12 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
+                <div class="md:w-1/2">
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4">Community Energy Overview</h2>
+                        <div class="h-64">
+                            <canvas id="energyOverviewChart"></canvas>
                         </div>
-                        <h3 class="text-4xl font-bold text-gray-900" id="energyGenerated">0</h3>
-                        <p class="mt-2 text-gray-600">MWh Generated</p>
-                    </div>
-                    <div class="bg-gray-50 rounded-xl p-6 text-center transform transition duration-300 hover:scale-105 hover:shadow-md">
-                        <div class="text-primary-500 mb-4">
-                            <svg class="h-12 w-12 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                            </svg>
-                        </div>
-                        <h3 class="text-4xl font-bold text-gray-900" id="communitiesServed">0</h3>
-                        <p class="mt-2 text-gray-600">Communities Served</p>
-                    </div>
-                    <div class="bg-gray-50 rounded-xl p-6 text-center transform transition duration-300 hover:scale-105 hover:shadow-md">
-                        <div class="text-secondary-500 mb-4">
-                            <svg class="h-12 w-12 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-4xl font-bold text-gray-900" id="carbonOffset">0</h3>
-                        <p class="mt-2 text-gray-600">Tons CO₂ Offset</p>
-                    </div>
-                    <div class="bg-gray-50 rounded-xl p-6 text-center transform transition duration-300 hover:scale-105 hover:shadow-md">
-                        <div class="text-primary-500 mb-4">
-                            <svg class="h-12 w-12 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-4xl font-bold text-gray-900" id="activeProjects">0</h3>
-                        <p class="mt-2 text-gray-600">Active Projects</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Energy Mix Chart Section -->
-        <section class="py-16 bg-gray-50">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="max-w-6xl mx-auto">
-                    <div class="flex flex-col md:flex-row">
-                        <div class="md:w-1/2 mb-10 md:mb-0 md:pr-8">
-                            <h2 class="text-3xl font-bold text-gray-900 mb-6">Regional Energy Mix</h2>
-                            <p class="text-gray-600 mb-6">Our communities are leveraging a diverse mix of renewable energy sources to meet their needs and reduce carbon emissions.</p>
-                            <div class="space-y-4">
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-primary-500 rounded-full mr-3"></div>
-                                    <div class="flex-1">
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-gray-700 font-medium">Solar</span>
-                                            <span class="text-gray-600">42%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-2">
-                                            <div class="bg-primary-500 h-2 rounded-full" style="width: 42%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-secondary-500 rounded-full mr-3"></div>
-                                    <div class="flex-1">
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-gray-700 font-medium">Wind</span>
-                                            <span class="text-gray-600">35%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-2">
-                                            <div class="bg-secondary-500 h-2 rounded-full" style="width: 35%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-yellow-500 rounded-full mr-3"></div>
-                                    <div class="flex-1">
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-gray-700 font-medium">Hydro</span>
-                                            <span class="text-gray-600">15%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-2">
-                                            <div class="bg-yellow-500 h-2 rounded-full" style="width: 15%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-red-500 rounded-full mr-3"></div>
-                                    <div class="flex-1">
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-gray-700 font-medium">Biomass</span>
-                                            <span class="text-gray-600">8%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-2">
-                                            <div class="bg-red-500 h-2 rounded-full" style="width: 8%"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="mt-4 flex justify-center">
+                            <div class="flex items-center mx-3">
+                                <span class="w-3 h-3 bg-primary-500 rounded-full mr-2"></span>
+                                <span class="text-sm text-gray-600">Solar</span>
                             </div>
-                        </div>
-                        <div class="md:w-1/2">
-                            <div class="bg-white rounded-lg shadow-lg p-6 h-full flex items-center justify-center">
-                                <canvas id="energyMixChart" width="400" height="300"></canvas>
+                            <div class="flex items-center mx-3">
+                                <span class="w-3 h-3 bg-secondary-500 rounded-full mr-2"></span>
+                                <span class="text-sm text-gray-600">Wind</span>
+                            </div>
+                            <div class="flex items-center mx-3">
+                                <span class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></span>
+                                <span class="text-sm text-gray-600">Hydro</span>
+                            </div>
+                            <div class="flex items-center mx-3">
+                                <span class="w-3 h-3 bg-purple-500 rounded-full mr-2"></span>
+                                <span class="text-sm text-gray-600">Biomass</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Featured Projects Section -->
-        <section class="py-16 bg-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
+    <!-- Key Stats Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-gray-900">Key Energy Statistics</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                    Tracking the impact of renewable energy across our communities.
+                </p>
+            </div>
+            <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border-t-4 border-primary-500">
+                    <div class="flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="text-lg font-medium text-gray-900">Total Energy Generated</h3>
+                        <p class="mt-2 text-3xl font-bold text-primary-600">2,345 MWh</p>
+                        <p class="mt-1 text-sm text-gray-500">Across all projects</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border-t-4 border-secondary-500">
+                    <div class="flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-secondary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="text-lg font-medium text-gray-900">Communities Served</h3>
+                        <p class="mt-2 text-3xl font-bold text-secondary-600">47</p>
+                        <p class="mt-1 text-sm text-gray-500">Across 3 regions</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border-t-4 border-yellow-500">
+                    <div class="flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="text-lg font-medium text-gray-900">CO₂ Reduction</h3>
+                        <p class="mt-2 text-3xl font-bold text-yellow-600">1,872 tons</p>
+                        <p class="mt-1 text-sm text-gray-500">This year alone</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border-t-4 border-purple-500">
+                    <div class="flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <h3 class="text-lg font-medium text-gray-900">Active Projects</h3>
+                        <p class="mt-2 text-3xl font-bold text-purple-600">123</p>
+                        <p class="mt-1 text-sm text-gray-500">Across 4 energy types</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end">
+                <div>
                     <h2 class="text-3xl font-bold text-gray-900">Featured Projects</h2>
-                    <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">Explore some of our highlighted renewable energy initiatives making a difference in communities.</p>
+                    <p class="mt-2 text-lg text-gray-600">
+                        Highlighting the most impactful renewable energy initiatives
+                    </p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Project Card 1 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-                        <div class="h-48 bg-gradient-to-r from-primary-400 to-primary-600 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-center mb-4">
-                                <span class="px-3 py-1 bg-primary-100 text-primary-800 rounded-full text-sm font-medium">Solar</span>
-                                <span class="text-gray-500 text-sm">Riverside County</span>
-                            </div>
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Community Solar Farm Initiative</h3>
-                            <p class="text-gray-600 mb-4">A collaborative solar farm providing clean energy to over 500 households in underserved communities.</p>
-                            <div class="flex justify-between items-center">
-                                <div class="text-primary-600 font-medium">5.2 MW Capacity</div>
-                                <a href="project-details.html" class="text-secondary-600 hover:text-secondary-800 font-medium flex items-center">
-                                    View Details
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project Card 2 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-                        <div class="h-48 bg-gradient-to-r from-secondary-400 to-secondary-600 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
-                            </svg>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-center mb-4">
-                                <span class="px-3 py-1 bg-secondary-100 text-secondary-800 rounded-full text-sm font-medium">Wind</span>
-                                <span class="text-gray-500 text-sm">Mountain Ridge</span>
-                            </div>
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Mountain Ridge Wind Farm</h3>
-                            <p class="text-gray-600 mb-4">Harnessing mountain winds to generate clean energy for the surrounding valley communities.</p>
-                            <div class="flex justify-between items-center">
-                                <div class="text-primary-600 font-medium">12.8 MW Capacity</div>
-                                <a href="project-details.html" class="text-secondary-600 hover:text-secondary-800 font-medium flex items-center">
-                                    View Details
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project Card 3 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-                        <div class="h-48 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                            </svg>
-                        </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-center mb-4">
-                                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Hydro</span>
-                                <span class="text-gray-500 text-sm">Clearwater River</span>
-                            </div>
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Riverside Micro-Hydro Network</h3>
-                            <p class="text-gray-600 mb-4">A series of small-scale hydro generators providing consistent renewable energy to rural areas.</p>
-                            <div class="flex justify-between items-center">
-                                <div class="text-primary-600 font-medium">3.6 MW Capacity</div>
-                                <a href="project-details.html" class="text-secondary-600 hover:text-secondary-800 font-medium flex items-center">
-                                    View Details
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center mt-10">
-                    <a href="projects.html" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700">
-                        View All Projects
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                </div>
+                <a href="projects.html" class="text-primary-600 hover:text-primary-700 flex items-center">
+                    View all projects
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </a>
             </div>
-        </section>
-
-        <!-- Get Involved Section -->
-        <section class="py-16 bg-gradient-to-r from-primary-500 to-secondary-500 text-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="max-w-4xl mx-auto text-center">
-                    <h2 class="text-3xl font-bold mb-6">Ready to Track & Manage Renewable Energy?</h2>
-                    <p class="text-xl mb-8 text-white/80">Join our platform to help your community transition to sustainable energy solutions.</p>
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <a href="projects.html" class="bg-white text-primary-600 font-medium px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors">
-                            Find Projects
+            
+            <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Project 1 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-primary-500 to-primary-600 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
+                                Solar
+                            </span>
+                            <span class="text-sm text-gray-500">Established 2022</span>
+                        </div>
+                        <h3 class="mt-4 text-xl font-semibold text-gray-900">Sunnyvale Community Solar Farm</h3>
+                        <p class="mt-2 text-gray-600">A 5MW solar installation powering over 1,000 homes in the Sunnyvale community.</p>
+                        <div class="mt-4 flex items-center">
+                            <div class="text-sm text-gray-600">
+                                <span class="font-medium text-primary-600">87%</span> efficiency
+                            </div>
+                            <div class="ml-6 text-sm text-gray-600">
+                                <span class="font-medium text-primary-600">1,253</span> homes powered
+                            </div>
+                        </div>
+                        <a href="project-detail.html" class="mt-6 block text-center py-2 px-4 border border-primary-500 rounded-md text-primary-700 hover:bg-primary-50 font-medium transition-colors duration-300">
+                            View Project Details
                         </a>
-                        <a href="about.html" class="bg-transparent border-2 border-white text-white font-medium px-6 py-3 rounded-lg hover:bg-white/10 transition-colors">
-                            Learn More
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-secondary-500 to-secondary-600 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-secondary-100 text-secondary-800">
+                                Wind
+                            </span>
+                            <span class="text-sm text-gray-500">Established 2021</span>
+                        </div>
+                        <h3 class="mt-4 text-xl font-semibold text-gray-900">Hilltop Wind Turbine Array</h3>
+                        <p class="mt-2 text-gray-600">12 wind turbines generating power for the eastern district, providing clean energy to businesses.</p>
+                        <div class="mt-4 flex items-center">
+                            <div class="text-sm text-gray-600">
+                                <span class="font-medium text-secondary-600">12</span> turbines
+                            </div>
+                            <div class="ml-6 text-sm text-gray-600">
+                                <span class="font-medium text-secondary-600">3.2 MW</span> capacity
+                            </div>
+                        </div>
+                        <a href="project-detail.html" class="mt-6 block text-center py-2 px-4 border border-secondary-500 rounded-md text-secondary-700 hover:bg-secondary-50 font-medium transition-colors duration-300">
+                            View Project Details
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gradient-to-r from-yellow-500 to-yellow-600 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                                Hydro
+                            </span>
+                            <span class="text-sm text-gray-500">Established 2020</span>
+                        </div>
+                        <h3 class="mt-4 text-xl font-semibold text-gray-900">Riverdale Micro-Hydro Plant</h3>
+                        <p class="mt-2 text-gray-600">A small-scale hydro electric facility on the Riverdale stream, providing consistent renewable power.</p>
+                        <div class="mt-4 flex items-center">
+                            <div class="text-sm text-gray-600">
+                                <span class="font-medium text-yellow-600">0.8 MW</span> capacity
+                            </div>
+                            <div class="ml-6 text-sm text-gray-600">
+                                <span class="font-medium text-yellow-600">92%</span> efficiency
+                            </div>
+                        </div>
+                        <a href="project-detail.html" class="mt-6 block text-center py-2 px-4 border border-yellow-500 rounded-md text-yellow-700 hover:bg-yellow-50 font-medium transition-colors duration-300">
+                            View Project Details
                         </a>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <footer class="bg-gray-900 text-white">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <svg class="h-8 w-8 text-primary-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 3V5M5.63607 5.63604L7.05029 7.05025M3 12H5M5.63607 18.364L7.05029 16.9497M12 19V21M16.9497 16.9497L18.364 18.364M19 12H21M16.9497 7.05025L18.364 5.63604M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span class="text-xl font-semibold">EcoTrack</span>
+    <!-- Community Impact Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:flex lg:items-center lg:space-x-12">
+                <div class="lg:w-1/2 mb-8 lg:mb-0">
+                    <h2 class="text-3xl font-bold text-gray-900">Community Impact</h2>
+                    <p class="mt-4 text-lg text-gray-600">
+                        Our renewable energy projects are making a real difference in communities across the region, reducing carbon footprints and creating sustainable energy independence.
+                    </p>
+                    <ul class="mt-8 space-y-4">
+                        <li class="flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-gray-700">Reduced electricity costs for low-income households</span>
+                        </li>
+                        <li class="flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-gray-700">Created 450+ local jobs in renewable energy</span>
+                        </li>
+                        <li class="flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-gray-700">Decreased dependency on fossil fuels by 27%</span>
+                        </li>
+                        <li class="flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-500 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span class="text-gray-700">Education programs reaching over 5,000 students</span>
+                        </li>
+                    </ul>
+                    <div class="mt-8">
+                        <a href="about.html" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium">
+                            Learn more about our mission
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
                     </div>
-                    <p class="text-gray-400 mb-4">Empowering communities with tools to track and manage renewable energy resources.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+                </div>
+                <div class="lg:w-1/2">
+                    <div class="bg-gray-50 rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">CO₂ Emissions Reduction</h3>
+                        <div class="h-64">
+                            <canvas id="emissionsChart"></canvas>
+                        </div>
+                        <div class="mt-4 grid grid-cols-2 gap-4">
+                            <div class="bg-white p-4 rounded-md shadow">
+                                <p class="text-sm text-gray-500">Annual CO₂ Reduction</p>
+                                <p class="text-xl font-bold text-primary-600">1,872 tons</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-md shadow">
+                                <p class="text-sm text-gray-500">Equivalent To</p>
+                                <p class="text-xl font-bold text-secondary-600">405 cars</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join the Movement Section -->
+    <section class="py-16 bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold">Join the Renewable Energy Movement</h2>
+            <p class="mt-4 text-xl text-white text-opacity-90 max-w-3xl mx-auto">
+                Connect with energy providers, community leaders, and fellow citizens to track and manage renewable resources in your area.
+            </p>
+            <div class="mt-10 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="projects.html" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary-700 bg-white hover:bg-gray-100 shadow-md transition-colors duration-300">
+                    Explore Projects
+                </a>
+                <a href="profile.html" class="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-md text-white bg-transparent hover:bg-white hover:bg-opacity-10 transition-colors duration-300">
+                    Join Our Community
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        <span class="ml-2 text-xl font-bold text-white">EcoTrack</span>
+                    </div>
+                    <p class="mt-4 text-gray-400">
+                        Empowering communities with renewable energy resource tracking and management.
+                    </p>
+                    <div class="mt-6 flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <span class="sr-only">Facebook</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                            </svg>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.054 10.054 0 01-3.127 1.184 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <span class="sr-only">Instagram</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                            </svg>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.441 16.892c-2.102.144-6.784.144-8.883 0C5.282 16.736 5.017 15.622 5 12c.017-3.629.285-4.736 2.558-4.892 2.099-.144 6.782-.144 8.883 0C18.718 7.264 18.982 8.378 19 12c-.018 3.629-.285 4.736-2.559 4.892zM10 9.658l4.917 2.338L10 14.342V9.658z"/></svg>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
                         </a>
                     </div>
                 </div>
                 <div>
-                    <h3 class="text-lg font-medium mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
-                        <li><a href="projects.html" class="text-gray-400 hover:text-white transition-colors">Projects</a></li>
-                        <li><a href="dashboard.html" class="text-gray-400 hover:text-white transition-colors">Dashboard</a></li>
-                        <li><a href="profile.html" class="text-gray-400 hover:text-white transition-colors">Community</a></li>
-                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                    <h3 class="text-lg font-semibold">Quick Links</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="projects.html" class="text-gray-400 hover:text-white">Projects</a></li>
+                        <li><a href="dashboard.html" class="text-gray-400 hover:text-white">Dashboard</a></li>
+                        <li><a href="profile.html" class="text-gray-400 hover:text-white">Community</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white">About</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-medium mb-4">Resources</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Energy Guides</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Community Resources</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Project Planning</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">FAQs</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Support</a></li>
+                    <h3 class="text-lg font-semibold">Resources</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">API Reference</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Sustainability Guide</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Energy Saving Tips</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-medium mb-4">Subscribe to Updates</h3>
-                    <p class="text-gray-400 mb-4">Stay informed about new features and community projects.</p>
-                    <form class="space-y-2">
-                        <div>
-                            <input type="email" placeholder="Your email address" class="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500">
-                        </div>
-                        <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-                            Subscribe
-                        </button>
-                    </form>
+                    <h3 class="text-lg font-semibold">Contact Us</h3>
+                    <ul class="mt-4 space-y-2">
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            <span class="text-gray-400">+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span class="text-gray-400">info@ecotrack.example</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span class="text-gray-400">123 Green Street, Eco City, EC 12345</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <div class="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400">© 2023 EcoTrack. All rights reserved.</p>
-                <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Contact Us</a>
-                </div>
+            <div class="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400">
+                <p>&copy; 2023 EcoTrack. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <!-- JavaScript Files -->
     <script src="js/main.js"></script>
     <script src="js/charts.js"></script>
 </body>
