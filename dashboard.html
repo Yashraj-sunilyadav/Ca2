@@ -6,6 +6,7 @@
     <title>Dashboard | EcoTrack</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <script>
         tailwind.config = {
             theme: {
@@ -106,18 +107,18 @@
     <!-- Page Header -->
     <div class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <div class="md:flex md:items-center md:justify-between">
+        <div class="md:flex md:items-center md:justify-between">
                 <div class="flex-1 min-w-0">
                     <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
                         Energy Resource Dashboard
                     </h2>
                 </div>
                 <div class="mt-4 flex md:mt-0 md:ml-4">
-                    <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                    <button id="newProjectBtn"   action="add_project.php" method="POST" type="button"  class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
-                        Export Data
+                        New Project
                     </button>
                     <button type="button" class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -132,47 +133,53 @@
 
     <!-- Filter Section -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div class="bg-white shadow rounded-lg p-5 mb-6">
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-                <!-- Time Period Filter -->
+        <!-- New Project Form (hidden by default) -->
+        <div id="newProjectForm" class="hidden bg-white shadow rounded-lg p-6 mb-8">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">New Project</h3>
+            <form id="projectForm" action="add_project.php" method="POST" class="space-y-4">
                 <div>
-                    <label for="time-period" class="block text-sm font-medium text-gray-700">Time Period</label>
-                    <select id="time-period" name="time-period" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
-                        <option value="today">Today</option>
-                        <option value="week" selected>This Week</option>
-                        <option value="month">This Month</option>
-                        <option value="quarter">This Quarter</option>
-                        <option value="year">This Year</option>
-                        <option value="custom">Custom Range</option>
+                    <label for="projectName" class="block text-sm font-medium text-gray-700">Project Name</label>
+                    <input type="text" name="projectName" id="projectName" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm">
+                </div>
+            
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea name="description" id="description" rows="3" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"></textarea>
+                </div>
+            
+                <div>
+                    <label for="energySaves" class="block text-sm font-medium text-gray-700">Energy Saves</label>
+                    <input type="number" name="energySaves" id="energySaves" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm">
+                </div>
+            
+                <div>
+                    <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                    <select name="status" id="status" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm">
+                        <option value="active">Active</option>
+                        <option value="ongoing">Ongoing</option>
                     </select>
                 </div>
-
-                <!-- Energy Type Filter -->
+            
                 <div>
-                    <label for="energy-type" class="block text-sm font-medium text-gray-700">Energy Type</label>
-                    <select id="energy-type" name="energy-type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
-                        <option value="all" selected>All Types</option>
-                        <option value="solar">Solar</option>
-                        <option value="wind">Wind</option>
-                        <option value="hydro">Hydro</option>
-                        <option value="biomass">Biomass</option>
-                        <option value="geothermal">Geothermal</option>
-                    </select>
+                    <label for="place" class="block text-sm font-medium text-gray-700">Place</label>
+                    <input type="text" name="place" id="place" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm">
                 </div>
-
-                <!-- Region Filter -->
+            
                 <div>
-                    <label for="region" class="block text-sm font-medium text-gray-700">Region</label>
-                    <select id="region" name="region" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm rounded-md">
-                        <option value="all" selected>All Regions</option>
-                        <option value="northwest">Northwest</option>
-                        <option value="southwest">Southwest</option>
-                        <option value="midwest">Midwest</option>
-                        <option value="northeast">Northeast</option>
-                        <option value="southeast">Southeast</option>
-                    </select>
+                    <label for="energyType" class="block text-sm font-medium text-gray-700">Energy Type</label>
+                    <input type="text" name="energyType" id="energyType" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm">
                 </div>
-            </div>
+            
+                <div class="pt-4">
+                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                        Save Project
+                    </button>
+                    <button type="button" id="cancelProjectBtn" class="ml-3 inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+            
         </div>
     </div>
 
@@ -340,13 +347,13 @@
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-medium text-gray-900">Energy Production Trend</h3>
                     <div class="flex items-center space-x-2">
-                        <button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                        <button type="button" onclick="daily_data()" class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                             Daily
                         </button>
-                        <button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                        <button type="button" onclick="weekly_data()" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                             Weekly
                         </button>
-                        <button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                        <button type="button"  onclick="monthly_data()"  class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                             Monthly
                         </button>
                     </div>
@@ -362,7 +369,7 @@
                     <h3 class="text-lg font-medium text-gray-900">Energy Type Distribution</h3>
                     <div>
                         <select class="text-sm border-gray-300 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                            <option>Current Week</option>
+                            <option >Current Week</option>
                             <option>Last Month</option>
                             <option>Last Quarter</option>
                             <option>Year to Date</option>
@@ -785,5 +792,132 @@
     <script src="assets/js/data.js"></script>
     <script src="assets/js/charts.js"></script>
     <script src="assets/js/main.js"></script>
+    <script>
+        // Initialize the Energy Type Distribution Chart
+        const energyTypeCtx = document.getElementById('energyTypeChart').getContext('2d');
+        new Chart(energyTypeCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Solar', 'Wind', 'Hydro', 'Biomass', 'Geothermal'],
+                datasets: [{
+                    data: [80, 28, 18, 8, 4],
+                    backgroundColor: ['#22c55e', '#0ea5e9', '#facc15', '#16a34a', '#f87171'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            }
+        });
+
+document.getElementById('newProjectBtn').addEventListener('click', function() {
+    document.getElementById('newProjectForm').classList.remove('hidden');
+});
+
+document.getElementById('cancelProjectBtn').addEventListener('click', function() {
+    document.getElementById('newProjectForm').classList.add('hidden');
+});
+
+
+        // Initialize the Energy Production Trend Chart
+        const energyProductionCtx = document.getElementById('energyProductionTrendChart').getContext('2d');
+        const energyChart = new Chart(energyProductionCtx, {
+            type: 'line',
+            data: {
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                datasets: [{
+                    label: 'Energy Produced (MWh)',
+                    data: [40, 150, 180, 200, 170, 190, 220],
+                    borderColor: '#22c55e',
+                    backgroundColor: 'rgba(34, 197, 94, 0.2)',
+                    borderWidth: 2,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Days of the Week'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Energy (MWh)'
+                        }
+                    }
+                }
+            }
+        });
+        function daily_data() {
+    alert("Fetching daily data...");
+
+    fetch('daily.php')
+        .then(response => {
+            if (!response.ok) throw new Error("HTTP error " + response.status);
+            return response.json();
+        })
+        .then(res => {
+            energyChart.data.labels = res.labels;             // ✅ This now works
+            energyChart.data.datasets[0].data = res.data;     // ✅ This now works
+            energyChart.update();
+        })
+        .catch(error => {
+            alert("Error fetching daily data");
+            console.error('Fetch error:', error);
+        });
+}
+
+        function weekly_data() {
+            alert("Fetching daily data...");
+
+fetch('weekly.php')
+    .then(response => {
+        if (!response.ok) throw new Error("HTTP error " + response.status);
+        return response.json();
+    })
+    .then(res => {
+        energyChart.data.labels = res.labels;             // ✅ This now works
+        energyChart.data.datasets[0].data = res.data;     // ✅ This now works
+        energyChart.update();
+    })
+    .catch(error => {
+        alert("Error fetching daily data");
+        console.error('Fetch error:', error);
+    });
+        }
+        function monthly_data() {
+            alert("Fetching daily data...");
+
+fetch('monthly.php')
+    .then(response => {
+        if (!response.ok) throw new Error("HTTP error " + response.status);
+        return response.json();
+    })
+    .then(res => {
+        energyChart.data.labels = res.labels;             // ✅ This now works
+        energyChart.data.datasets[0].data = res.data;     // ✅ This now works
+        energyChart.update();
+    })
+    .catch(error => {
+        alert("Error fetching daily data");
+        console.error('Fetch error:', error);
+    });
+        }
+    </script>
 </body>
 </html>

@@ -241,7 +241,7 @@
                 </div>
                 <div class="mt-10 lg:mt-0 lg:w-1/2">
                     <div class="bg-white p-6 rounded-lg shadow">
-                        <canvas id="energyDistributionChart" height="300"></canvas>
+                        <canvas id="energyDistributionChart"  height="300"></canvas>
                     </div>
                 </div>
             </div>
@@ -263,9 +263,7 @@
                 <!-- Project Card 1 -->
                 <div class="bg-white overflow-hidden shadow rounded-lg transition duration-300 hover:shadow-lg">
                     <div class="h-48 bg-gradient-to-r from-primary-400 to-primary-600 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
+                        <img src="images/IMG-20250413-WA0010.jpg" class="h-full w-full object-cover rounded-t-lg" alt="Project Image">
                     </div>
                     <div class="p-6">
                         <div class="flex items-center">
@@ -294,7 +292,7 @@
                 <!-- Project Card 2 -->
                 <div class="bg-white overflow-hidden shadow rounded-lg transition duration-300 hover:shadow-lg">
                     <div class="h-48 bg-gradient-to-r from-secondary-400 to-secondary-600 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <img src="images/IMG-20250413-WA0006.jpg" class="h-full w-full object-cover rounded-t-lg" alt="Project Image">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M14.121 15.536c-1.171 1.952-3.07 1.952-4.242 0-1.172-1.953-1.172-5.119 0-7.072M8 10.5h8m-4-4.5v13.5" />
                         </svg>
                     </div>
@@ -325,7 +323,7 @@
                 <!-- Project Card 3 -->
                 <div class="bg-white overflow-hidden shadow rounded-lg transition duration-300 hover:shadow-lg">
                     <div class="h-48 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <img src="images/IMG-20250413-WA0007.jpg" class="h-full w-full object-cover rounded-t-lg" alt="Project Image">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                         </svg>
                     </div>
@@ -450,5 +448,47 @@
     <script src="assets/js/data.js"></script>
     <script src="assets/js/charts.js"></script>
     <script src="assets/js/main.js"></script>
+    <script>
+        // Initialize the energy distribution chart
+        const ctx = document.getElementById('energyDistributionChart').getContext('2d');
+        energyDistributionChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Solar', 'Wind', 'Hydro', 'Biomass', 'Geothermal'],
+                datasets: [{
+                    data: [42, 28, 18, 8, 4],
+                    backgroundColor: ['#22c55e', '#0ea5e9', '#facc15', '#16a34a', '#f87171'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            }
+        });
+        function main_chart() {
+            alert("Fetching daily data...");
+
+fetch('main_chart.php')
+    .then(response => {
+        if (!response.ok) throw new Error("HTTP error " + response.status);
+        return response.json();
+    })
+    .then(res => {
+        energyDistributionChart.data.labels = res.labels;             // ✅ This now works
+        energyDistributionChart.data.datasets[0].data = res.data;     // ✅ This now works
+        energyDistributionChart.update();
+    })
+    .catch(error => {
+        alert("Error fetching daily data");
+        console.error('Fetch error:', error);
+    });
+        }
+        document.addEventListener("DOMContentLoaded", main_chart);
+    </script>
 </body>
 </html>

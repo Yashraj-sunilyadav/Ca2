@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Control Panel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center px-4">
+
+  <div class="bg-white shadow-xl rounded-2xl p-8 max-w-2xl w-full">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Update Energy Distribution</h2>
+
+    <form action="update_chart.php" method="POST" class="space-y-6">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Repeat for 5 sets -->
+        <!-- Label 1 + Data 1 -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Energy Source 1</label>
+          <select name="label1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500">
+            <option value="Solar">Solar</option>
+            <option value="Wind">Wind</option>
+            <option value="Hydro">Hydro</option>
+            <option value="Biomass">Biomass</option>
+            <option value="Geothermal">Geothermal</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Value (%)</label>
+          <input type="number" name="data1" required min="0" max="100" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <!-- Label 2 + Data 2 -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Energy Source 2</label>
+          <select name="label2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+            <option value="Solar">Solar</option>
+            <option value="Wind">Wind</option>
+            <option value="Hydro">Hydro</option>
+            <option value="Biomass">Biomass</option>
+            <option value="Geothermal">Geothermal</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Value (%)</label>
+          <input type="number" name="data2" required min="0" max="100" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+        </div>
+
+        <!-- Repeat up to data5 -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Energy Source 3</label>
+          <select name="label3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+            <option value="Solar">Solar</option>
+            <option value="Wind">Wind</option>
+            <option value="Hydro">Hydro</option>
+            <option value="Biomass">Biomass</option>
+            <option value="Geothermal">Geothermal</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Value (%)</label>
+          <input type="number" name="data3" required min="0" max="100" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Energy Source 4</label>
+          <select name="label4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+            <option value="Solar">Solar</option>
+            <option value="Wind">Wind</option>
+            <option value="Hydro">Hydro</option>
+            <option value="Biomass">Biomass</option>
+            <option value="Geothermal">Geothermal</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Value (%)</label>
+          <input type="number" name="data4" required min="0" max="100" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Energy Source 5</label>
+          <select name="label5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+            <option value="Solar">Solar</option>
+            <option value="Wind">Wind</option>
+            <option value="Hydro">Hydro</option>
+            <option value="Biomass">Biomass</option>
+            <option value="Geothermal">Geothermal</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Value (%)</label>
+          <input type="number" name="data5" required min="0" max="100" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition duration-200">Update Chart</button>
+      </div>
+
+    </form>
+  </div>
+
+</body>
+</html>
